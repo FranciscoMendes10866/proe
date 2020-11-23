@@ -1,13 +1,23 @@
-import { FlexboxGrid, Button } from 'rsuite';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+
+import Navbar from './components/Navbar'
+import router from './router/index'
 
 const App = () => {
   return (
-    <FlexboxGrid justify="center">
-      <FlexboxGrid.Item>
-        <h3>React + React Suite UI + Redux = 🌈 🤯 🧿</h3>
-        <Button appearance="primary">Magic 🎩</Button>
-      </FlexboxGrid.Item>
-    </FlexboxGrid>
+    <Router>
+      <Navbar />
+      <Switch>
+        {router.map((route, index) => (
+          <Route
+            key={index}
+            path={route.path}
+            exact
+            render={(props) => <route.component {...props} />}
+          />
+        ))}
+      </Switch>
+    </Router>
   )
 }
 
