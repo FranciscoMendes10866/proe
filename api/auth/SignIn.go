@@ -30,14 +30,20 @@ func SignIn(c *fiber.Ctx) error {
 	// stores the user input password value
 	pass := body.Password
 	// verifies if the user exists
-	response, err := prisma.User.FindMany(
+	query, err := prisma.User.FindMany(
 		db.User.Email.Equals(body.Email),
 	).Exec(ctx)
 	if err != nil {
 		panic(err)
 	}
+	var res User
+	res = User{
+		ID:       query[0].ID,
+		Username: query[0].Username,
+		Password: query[0].Password,
+	}
 	// here we check if the passwords match
-	match := bcrypt.CompareHashAndPassword([]byte(response[0].Password), []byte(pass))
+	match := bcrypt.CompareHashAndPassword([]byte(res.Password), []byte(pass))
 	if match != nil {
 		return c.SendStatus(fiber.StatusUnauthorized)
 	}
@@ -45,7 +51,7 @@ func SignIn(c *fiber.Ctx) error {
 	token := jwt.New(jwt.SigningMethodHS256)
 	// Set claims
 	claims := token.Claims.(jwt.MapClaims)
-	claims["id"] = response[0].ID
+	claims["id"] = res.ID
 	// Generate encoded token and send it as response.
 	loginToken, err := token.SignedString([]byte("iwD6BUwQg9nCtIu7tRbYQAxjwX"))
 	if err != nil {
@@ -53,6 +59,7 @@ func SignIn(c *fiber.Ctx) error {
 	}
 	// Response
 	return c.JSON(fiber.Map{
-		"token": loginToken,
+		"token":    loginToken,
+		"username": res.Username,
 	})
 }

@@ -1,37 +1,60 @@
-import { Link } from 'react-router-dom'
-import { Container, Navbar, Nav, Header, Icon } from 'rsuite'
+import { useState } from 'react';
+import {
+  Collapse,
+  Navbar,
+  NavbarToggler,
+  NavbarBrand,
+  Nav,
+  NavItem,
+  NavLink,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+  NavbarText
+} from 'reactstrap';
 
-const TopNavbar = () => {
-    return (
-        <Container>
-            <Header>
-                <Navbar>
-                    <Navbar.Header>
-                        <Nav>
-                            <Nav.Item><Icon icon="google-wallet" /></Nav.Item>
-                        </Nav>
-                    </Navbar.Header>
-                    <Navbar.Body>
-                        <Nav pullRight>
-                            <Link to="/">
-                                <Nav.Item icon={<Icon icon="home" />}>Sign up</Nav.Item>
-                            </Link>
-                            <Link to="/sign-in">
-                                <Nav.Item icon={<Icon icon="sign-in" />}>Sign in</Nav.Item>
-                            </Link>
-                            <Link to="/create">
-                                <Nav.Item icon={<Icon icon="plus" />}>Add Contact</Nav.Item>
-                            </Link>
-                            <Link to="/dashboard">
-                                <Nav.Item icon={<Icon icon="address-book-o" />}>Contacts</Nav.Item>
-                            </Link>
-                            <Nav.Item icon={<Icon icon="sign-out" />}>Log out</Nav.Item>
-                        </Nav>
-                    </Navbar.Body>
-                </Navbar>
-            </Header>
-        </Container>
-    )
+const NavbarComponent = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggle = () => setIsOpen(!isOpen);
+
+  return (
+    <div>
+      <Navbar color="light" light expand="md">
+        <NavbarBrand href="/">reactstrap</NavbarBrand>
+        <NavbarToggler onClick={toggle} />
+        <Collapse isOpen={isOpen} navbar>
+          <Nav className="mr-auto" navbar>
+            <NavItem>
+              <NavLink href="/components/">Components</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>
+            </NavItem>
+            <UncontrolledDropdown nav inNavbar>
+              <DropdownToggle nav caret>
+                Options
+              </DropdownToggle>
+              <DropdownMenu right>
+                <DropdownItem>
+                  Option 1
+                </DropdownItem>
+                <DropdownItem>
+                  Option 2
+                </DropdownItem>
+                <DropdownItem divider />
+                <DropdownItem>
+                  Reset
+                </DropdownItem>
+              </DropdownMenu>
+            </UncontrolledDropdown>
+          </Nav>
+          <NavbarText>Simple Text</NavbarText>
+        </Collapse>
+      </Navbar>
+    </div>
+  );
 }
 
-export default TopNavbar
+export default NavbarComponent
