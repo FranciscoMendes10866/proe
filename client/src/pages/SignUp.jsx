@@ -1,7 +1,13 @@
 import { useState } from 'react'
+import { useHistory } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import { Form, Input, Button } from 'reactstrap';
 
+import SignUpAction from '../store/actions/auth/SignUp'
+
 const App = () => {
+  const dispatch = useDispatch()
+  const history = useHistory()
   const [form, setForm] = useState({
     username: '',
     email: '',
@@ -12,7 +18,13 @@ const App = () => {
   }
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(form)
+    dispatch(SignUpAction(form))
+    setForm({
+      username: '',
+      email: '',
+      password: '',
+    })
+    history.push('/dashboard')
   }
   return (
     <Form>
