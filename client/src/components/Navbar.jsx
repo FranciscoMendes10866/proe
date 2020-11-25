@@ -111,19 +111,37 @@ const NavbarComponent = () => {
       </>
     )
   }
+  let showNavBrand
+  if (stateToken === null) {
+    showNavBrand = (
+      <Link
+        style={{
+          textDecoration: linkStyles.textDecoration,
+          color: linkStyles.color
+        }}
+        to="/"
+      >
+        <DiIntellij />
+      </Link>
+    )
+  } else {
+    showNavBrand = (
+      <Link
+        style={{
+          textDecoration: linkStyles.textDecoration,
+          color: linkStyles.color
+        }}
+        to="/dashboard"
+      >
+        <DiIntellij />
+      </Link>
+    )
+  }
   return (
     <div>
       <Navbar color="light" light expand="md">
         <NavbarBrand>
-          <Link
-            style={{
-              textDecoration: linkStyles.textDecoration,
-              color: linkStyles.color
-            }}
-            to="/"
-          >
-            <DiIntellij />
-          </Link>
+          {showNavBrand}
         </NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
