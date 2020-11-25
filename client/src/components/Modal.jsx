@@ -14,6 +14,16 @@ const ModalComponent = ({ contact }) => {
         number: contact.number,
     })
     const toggle = () => setModal(!modal);
+    const close = (e) => {
+        e.preventDefault()
+        setForm({
+            name: '',
+            picture: '',
+            device: '',
+            number: '',
+        })
+        setModal(!modal)
+    }
     const handleOnChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value })
     }
@@ -77,7 +87,7 @@ const ModalComponent = ({ contact }) => {
                 </ModalBody>
                 <ModalFooter>
                     <Button color="primary" onClick={submitUpdate}>Update</Button>{' '}
-                    <Button color="secondary" onClick={toggle}>Close</Button>
+                    <Button color="secondary" onClick={close}>Close</Button>
                 </ModalFooter>
             </Modal>
         </>
