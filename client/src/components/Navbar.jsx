@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { Link, useHistory } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
 import { DiIntellij } from 'react-icons/di'
 import {
   Collapse,
@@ -16,14 +16,22 @@ import {
   DropdownItem
 } from 'reactstrap';
 
+import LogOutAction from '../store/actions/auth/LogOut'
+
 const NavbarComponent = () => {
   const linkStyles = {
     textDecoration: 'none',
     color: 'black',
   }
+  const dispatch = useDispatch()
+  const history = useHistory()
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
   const stateToken = useSelector((state) => state.auth.token)
+  const handleLogOut = (e) => {
+    e.preventDefault()
+    dispatch(LogOutAction(history))
+  }
   let isLoggedIn
   if (stateToken === null) {
     isLoggedIn = (
@@ -95,9 +103,9 @@ const NavbarComponent = () => {
             >Account</span>
           </DropdownToggle>
           <DropdownMenu right>
-            <DropdownItem>
+            <DropdownItem onClick={handleLogOut}>
               Log out
-                </DropdownItem>
+            </DropdownItem>
           </DropdownMenu>
         </UncontrolledDropdown>
       </>
