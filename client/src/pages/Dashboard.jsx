@@ -1,12 +1,10 @@
-import { useSelector } from 'react-redux'
+import CardComponent from '../components/Card'
 
 const Dashboard = () => {
-    const username = useSelector((state) => state.auth.username)
     return (
-        <div>
-            <h1>Dashboard</h1>
-            <h3>🎉 { username } 🎉</h3>
-        </div>
+        <>
+            <CardComponent />
+        </>
     )
 }
 
