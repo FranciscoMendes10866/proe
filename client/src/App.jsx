@@ -1,13 +1,15 @@
 import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
-import store from './store'
+import { store, persistor } from './store'
 import Navbar from './components/Navbar'
 import router from './router'
 
 const App = () => {
   return (
     <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
       <Router>
         <Navbar />
         <Switch>
@@ -21,6 +23,7 @@ const App = () => {
           ))}
         </Switch>
       </Router>
+      </PersistGate>
     </Provider>
   )
 }
