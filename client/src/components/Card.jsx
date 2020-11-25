@@ -6,6 +6,7 @@ import {
     CardTitle, CardSubtitle, Button, Container, Row, Col
 } from 'reactstrap';
 
+import ModalComponent from './Modal'
 import GetAction from '../store/actions/contacts/Get'
 import DeleteAction from '../store/actions/contacts/Delete'
 
@@ -27,8 +28,11 @@ const CardComponent = () => {
                         <CardTitle tag="h5">{contact.name}</CardTitle>
                         <CardText><b>Device:</b>&nbsp;{contact.device}</CardText>
                         <CardText><b>Number:</b>&nbsp;{contact.number}</CardText>
-                        <Button onClick={() => handleDelete(contact.id)} color="danger">Delete</Button>
-                        <Button className="ml-2" color="warning">Edit</Button>
+                        <Button 
+                            className="mr-2" 
+                            onClick={() => handleDelete(contact.id)} 
+                            color="danger">Delete</Button>
+                        <ModalComponent contact={contact} />
                     </CardBody>
                 </Card>
             </Col>

@@ -1,10 +1,16 @@
+import authInitialState from '../../initialStates/auth'
+import contactsInitialState from '../../initialStates/contacts'
+
 const LogOut = (history) => (dispatch, getState) => {
     const stateToken = getState().auth.token
-    const data = { token: null, username: null }
     if (stateToken !== null) {
         dispatch({
             type: 'LOG_OUT',
-            payload: data,
+            payload: authInitialState,
+        })
+        dispatch({
+            type: 'CLEAN_CONTACTS',
+            payload: contactsInitialState,
         })
         history.push('/sign-in')
     }
