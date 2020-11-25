@@ -1,15 +1,16 @@
 import axios from 'axios'
 
-const SignUp = ({ username, email, password }) => (dispatch) => {
-    const formData = { username, email, password }
+const SignUp = (form, history) => (dispatch) => {
     const baseURL = 'http://localhost:3275/api/v1/auth/sign_up'
-    axios.post(baseURL, formData)
+    axios.post(baseURL, form)
         .then(({ data }) => {
-            console.log(data)
-            dispatch({
-                type: 'SIGN_UP',
-                payload: data,
-            })
+            if (data.token) {
+                dispatch({
+                    type: 'SIGN_UP',
+                    payload: data,
+                })
+                history.push('/dashboard')
+            }
         })
         .catch((err) => {
             console.log(err)

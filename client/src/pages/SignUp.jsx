@@ -18,13 +18,12 @@ const App = () => {
   }
   const handleSubmit = (e) => {
     e.preventDefault()
-    dispatch(SignUpAction(form))
+    dispatch(SignUpAction(form, history))
     setForm({
       username: '',
       email: '',
       password: '',
     })
-    history.push('/dashboard')
   }
   return (
     <Form>
